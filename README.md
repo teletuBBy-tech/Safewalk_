@@ -1,4 +1,4 @@
-# meenal_1
+# SafeWalk
 
 A new Flutter project.
 
