@@ -71,7 +71,8 @@ class _MapPageState extends State<MapPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Failed to get current location')),
       );
-      setState(() {
+      setState(() { 
+        
         _isLoading = false; // Stop loading even if there's an error
       });
     }

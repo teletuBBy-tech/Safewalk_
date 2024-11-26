@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'chat_screen.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -413,55 +413,58 @@ class MainScreen extends StatelessWidget {
   }
 }
 
-
-
+// =============adding chat bot=================================
 
 class MedicalCareScreen extends StatelessWidget {
-  final List<MedicalCareItem> items = [
-    MedicalCareItem(
-      title: 'Chat with Rosa',
-      description: 'Get assistance for common medical emergencies.',
-      icon: Icons.chat,
-      onTap: () {
-        
-      },
-    ),
-    MedicalCareItem(
-      title: 'Nearby Hospitals',
-      description: 'Find the closest hospitals based on your location.',
-      icon: Icons.local_hospital,
-      onTap: () {
-        
-      },
-    ),
-    MedicalCareItem(
-      title: 'Call Ambulance',
-      description: 'Quickly call an ambulance in case of an emergency.',
-      icon: Icons.call,
-      onTap: () {
-        // Call ambulance
-      },
-    ),
-    MedicalCareItem(
-      title: 'First Aid Tutorials',
-      description: 'Learn CPR, wound care, and other essential first aid skills.',
-      icon: Icons.play_circle_filled,
-      onTap: () {
-        // Navigate to first aid video tutorials
-      },
-    ),
-    MedicalCareItem(
-      title: 'Mental Health Support',
-      description: 'Access mental health resources and helpline.',
-      icon: Icons.support,
-      onTap: () {
-        // Show mental health support options
-      },
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final List<MedicalCareItem> items = [
+      MedicalCareItem(
+        title: 'Chat with Rosa',
+        description: 'Get assistance for common medical emergencies.',
+        icon: Icons.chat,
+        onTap: () {
+          // Navigate to the ChatScreen when the user taps on Chat with Rosa
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ChatScreen()),
+          );
+        },
+      ),
+      MedicalCareItem(
+        title: 'Nearby Hospitals',
+        description: 'Find the closest hospitals based on your location.',
+        icon: Icons.local_hospital,
+        onTap: () {
+          // Handle Nearby Hospitals navigation
+        },
+      ),
+      MedicalCareItem(
+        title: 'Call Ambulance',
+        description: 'Quickly call an ambulance in case of an emergency.',
+        icon: Icons.call,
+        onTap: () {
+          // Handle Call Ambulance functionality
+        },
+      ),
+      MedicalCareItem(
+        title: 'First Aid Tutorials',
+        description: 'Learn CPR, wound care, and other essential first aid skills.',
+        icon: Icons.play_circle_filled,
+        onTap: () {
+          // Handle First Aid Tutorials navigation
+        },
+      ),
+      MedicalCareItem(
+        title: 'Mental Health Support',
+        description: 'Access mental health resources and helpline.',
+        icon: Icons.support,
+        onTap: () {
+          // Handle Mental Health Support functionality
+        },
+      ),
+    ];
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Medical Care'),
@@ -519,6 +522,123 @@ class MedicalCareItem {
     required this.onTap,
   });
 }
+
+// Placeholder for the ChatScreen widget
+class ChatScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Chat with Rosa')),
+      body: Center(child: Text('This is the chat screen.')),
+    );
+  }
+}
+
+
+
+// class MedicalCareScreen extends StatelessWidget {
+//   final List<MedicalCareItem> items = [
+//     MedicalCareItem(
+//       title: 'Chat with Rosa',
+//       description: 'Get assistance for common medical emergencies.',
+//       icon: Icons.chat,
+//       onTap: () {
+        
+//       },
+//     ),
+//     MedicalCareItem(
+//       title: 'Nearby Hospitals',
+//       description: 'Find the closest hospitals based on your location.',
+//       icon: Icons.local_hospital,
+//       onTap: () {
+        
+//       },
+//     ),
+//     MedicalCareItem(
+//       title: 'Call Ambulance',
+//       description: 'Quickly call an ambulance in case of an emergency.',
+//       icon: Icons.call,
+//       onTap: () {
+//         // Call ambulance
+//       },
+//     ),
+//     MedicalCareItem(
+//       title: 'First Aid Tutorials',
+//       description: 'Learn CPR, wound care, and other essential first aid skills.',
+//       icon: Icons.play_circle_filled,
+//       onTap: () {
+//         // Navigate to first aid video tutorials
+//       },
+//     ),
+//     MedicalCareItem(
+//       title: 'Mental Health Support',
+//       description: 'Access mental health resources and helpline.',
+//       icon: Icons.support,
+//       onTap: () {
+//         // Show mental health support options
+//       },
+//     ),
+//   ];
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Medical Care'),
+//       ),
+//       body: GridView.count(
+//         crossAxisCount: 2,
+//         padding: EdgeInsets.all(16.0),
+//         children: items.map((item) {
+//           return Card(
+//             child: InkWell(
+//               onTap: item.onTap,
+//               child: Column(
+//                 mainAxisAlignment: MainAxisAlignment.center,
+//                 children: [
+//                   Icon(item.icon, size: 40, color: Colors.pink),
+//                   SizedBox(height: 10),
+//                   Text(
+//                     item.title,
+//                     textAlign: TextAlign.center,
+//                     style: TextStyle(
+//                       fontSize: 16,
+//                       fontWeight: FontWeight.bold,
+//                       color: Colors.black,
+//                     ),
+//                   ),
+//                   SizedBox(height: 5),
+//                   Text(
+//                     item.description,
+//                     textAlign: TextAlign.center,
+//                     style: TextStyle(
+//                       fontSize: 12,
+//                       color: Colors.black,
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           );
+//         }).toList(),
+//       ),
+//     );
+//   }
+// }
+
+// class MedicalCareItem {
+//   final String title;
+//   final String description;
+//   final IconData icon;
+//   final VoidCallback onTap;
+
+//   MedicalCareItem({
+//     required this.title,
+//     required this.description,
+//     required this.icon,
+//     required this.onTap,
+//   });
+// }
 
 
 class TabItem extends StatelessWidget {
@@ -645,6 +765,62 @@ class BlogScreen extends StatelessWidget {
   }
 }
 
+// idk if this will work or not but adding defining of tut cards earlier for youtube vdo===============================
+class TutorialCard extends StatelessWidget {
+  final String title;
+  final String description;
+  final String videoUrl;
+
+  const TutorialCard({
+    required this.title,
+    required this.description,
+    required this.videoUrl,
+  });
+
+  void _launchUrl() async {
+    if (await canLaunch(videoUrl)) {
+      await launch(videoUrl);
+    } else {
+      throw 'Could not launch $videoUrl';
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: EdgeInsets.symmetric(vertical: 8.0),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 8.0),
+            Text(
+              description,
+              style: TextStyle(fontSize: 16),
+            ),
+            SizedBox(height: 8.0),
+            ElevatedButton.icon(
+              onPressed: _launchUrl,  // Launches the video URL
+              icon: Icon(Icons.play_arrow),
+              label: Text('Watch Tutorial'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.pink,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 class SelfDefenseTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -665,6 +841,9 @@ class SelfDefenseTab extends StatelessWidget {
     );
   }
 }
+
+
+
 
 class ScenarioTrainingTab extends StatelessWidget {
   @override
@@ -744,55 +923,7 @@ class FitnessConditioningTab extends StatelessWidget {
   }
 }
 
-class TutorialCard extends StatelessWidget {
-  final String title;
-  final String description;
-  final String videoUrl;
 
-  const TutorialCard({
-    required this.title,
-    required this.description,
-    required this.videoUrl,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.symmetric(vertical: 8.0),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 8.0),
-            Text(
-              description,
-              style: TextStyle(fontSize: 16),
-            ),
-            SizedBox(height: 8.0),
-            ElevatedButton.icon(
-              onPressed: () {
-                // Open video tutorial in browser
-              },
-              icon: Icon(Icons.play_arrow),
-              label: Text('Watch Tutorial'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.pink,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 class AlertsScreen extends StatelessWidget {
   final List<AlertItem> alerts = [
