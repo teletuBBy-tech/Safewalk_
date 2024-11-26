@@ -16,7 +16,7 @@ class _MapPageState extends State<MapPage> {
   final Set<Marker> _markers = {};
   final Set<Polyline> _polylines = {};
   final List<LatLng> _userPath = [];
-  bool _isLoading = true; // Add a loading state
+  bool _isLoading = true; 
 
   @override
   void initState() {
@@ -75,7 +75,7 @@ class _MapPageState extends State<MapPage> {
       );
       setState(() { 
         
-        _isLoading = false; // Stop loading even if there's an error
+        _isLoading = false; 
       });
     }
   }
@@ -112,7 +112,7 @@ class _MapPageState extends State<MapPage> {
 
   void _addHighCrimeAreaMarkers() {
     final List<LatLng> highCrimeAreas = [
-      const LatLng(45.525563, -122.677433), // Example coordinates, add more as needed
+      const LatLng(45.525563, -122.677433), 
     ];
 
     for (LatLng area in highCrimeAreas) {
