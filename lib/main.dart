@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'chat_screen.dart';
+
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -431,13 +431,14 @@ class MedicalCareScreen extends StatelessWidget {
         title: 'Chat with Rosa',
         description: 'Get assistance for common medical emergencies.',
         icon: Icons.chat,
-        onTap: () {
-          // Navigate to the ChatScreen when the user taps on Chat with Rosa
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => ChatScreen()),
-          );
-        },
+         onTap: () async {
+        const url = 'https://bot.dialogflow.com/0c6f1dba-16cd-439d-befe-e5de7576f27c'; // Replace with your video link
+        if (await canLaunch(url)) {
+          await launch(url);
+        } else {
+          throw 'Could not launch $url';
+        }
+      },
       ),
       MedicalCareItem(
         title: 'Nearby Hospitals',
@@ -455,14 +456,19 @@ class MedicalCareScreen extends StatelessWidget {
           // Handle Call Ambulance functionality
         },
       ),
-      MedicalCareItem(
-        title: 'First Aid Tutorials',
-        description: 'Learn CPR, wound care, and other essential first aid skills.',
-        icon: Icons.play_circle_filled,
-        onTap: () {
-          // Handle First Aid Tutorials navigation
-        },
-      ),
+       MedicalCareItem(
+      title: 'First Aid Tutorials',
+      description: 'Learn CPR, wound care, and other essential first aid skills.',
+      icon: Icons.play_circle_filled,
+      onTap: () async {
+        const url = 'https://youtu.be/ea1RJUOiNfQ?si=zzy0FeWuGtbb7o1u'; // Replace with your video link
+        if (await canLaunch(url)) {
+          await launch(url);
+        } else {
+          throw 'Could not launch $url';
+        }
+      },
+    ),
       MedicalCareItem(
         title: 'Mental Health Support',
         description: 'Access mental health resources and helpline.',
@@ -846,12 +852,12 @@ class SelfDefenseTab extends StatelessWidget {
         TutorialCard(
           title: 'Basic Self-Defense Techniques',
           description: 'Learn the basics of self-defense to protect yourself in various situations.',
-          videoUrl: 'https://youtu.be/vPrdl0VaOHE?si=58me6iHfKmTuubxg',
+          videoUrl: 'https://youtu.be/ERMZRMqQmVI?si=boW7whOra_AB_Qps',
         ),
         TutorialCard(
           title: 'Advanced Self-Defense Moves',
           description: 'Enhance your skills with these advanced self-defense techniques.',
-          videoUrl: 'https://youtu.be/vPrdl0VaOHE?si=58me6iHfKmTuubxg',
+          videoUrl: 'https://youtu.be/B725c7vi1xk?si=WmeRWhFH5cMvuNk4',
         ),
       ],
     );
@@ -872,22 +878,22 @@ class ScenarioTrainingTab extends StatelessWidget {
         TutorialCard(
           title: 'Nighttime Safety',
           description: 'Learn how to stay safe during nighttime activities.',
-          videoUrl: 'https://youtu.be/vPrdl0VaOHE?si=58me6iHfKmTuubxg',
+          videoUrl: 'https://youtu.be/T2Xc4mRURkc?si=suTzFD0xD_L0RA7g',
         ),
         TutorialCard(
           title: 'Public Transport Safety',
           description: 'Techniques to ensure your safety while using public transport.',
-          videoUrl: 'https://youtu.be/vPrdl0VaOHE?si=58me6iHfKmTuubxg',
+          videoUrl: 'https://youtu.be/3c2IRKJ74HQ?si=n_dOiHtskA5oR4U7',
         ),
         TutorialCard(
           title: 'Weapons Defense',
           description: 'Techniques to defend yourself against weapons like knives, escape or disarming a gun threat, etc.',
-          videoUrl: 'https://youtu.be/vPrdl0VaOHE?si=58me6iHfKmTuubxg', 
+          videoUrl: 'https://youtu.be/HMtNKZEul3E?si=t5tAewcDvvht4L10', 
         ),
         TutorialCard(
           title: 'Home Invasion',
           description: 'Techniques for defending yourself in your home.',
-          videoUrl: 'https://youtu.be/vPrdl0VaOHE?si=58me6iHfKmTuubxg', 
+          videoUrl: 'https://youtu.be/gy5k6ZnXk1c?si=1oqNe4-9J9ok0fJD', 
         ),
       ],
     );
@@ -905,12 +911,12 @@ class VirtualInstructorTab extends StatelessWidget {
         TutorialCard(
           title: 'AI-Powered Self-Defense Practice',
           description: 'Use our virtual instructor to practice self-defense techniques at home.',
-          videoUrl: 'https://www.example.com/ai-practice',
+          videoUrl: 'https://youtu.be/ERMZRMqQmVI?si=boW7whOra_AB_Qps',
         ),
         TutorialCard(
           title: 'Personalized Training Programs',
           description: 'Get a personalized self-defense training program powered by AI.',
-          videoUrl: 'https://www.example.com/personalized-program',
+          videoUrl: 'https://youtu.be/B725c7vi1xk?si=WmeRWhFH5cMvuNk4',
         ),
       ],
     );
@@ -928,17 +934,17 @@ class FitnessConditioningTab extends StatelessWidget {
         TutorialCard(
           title: 'Strength Training Basics',
           description: 'Build strength with these essential exercises.',
-          videoUrl: 'https://www.example.com/strength-training-basics',
+          videoUrl: 'https://youtu.be/TN9i9Ni0Xr4?si=nIPaeZAOUo5XVsz9',
         ),
         TutorialCard(
           title: 'Flexibility Routines',
           description: 'Improve your flexibility with these daily routines.',
-          videoUrl: 'https://www.example.com/flexibility-routines',
+          videoUrl: 'https://youtu.be/itJE4neqDJw?si=NfQwlwjdqX_kclTU',
         ),
         TutorialCard(
           title: 'Cardio Conditioning',
           description: 'Boost your endurance with these cardio workouts.',
-          videoUrl: 'https://www.example.com/cardio-conditioning',
+          videoUrl: 'https://youtu.be/3-_cOnVk0N4?si=UxR1_cYySd-FEz8Z',
         ),
       ],
     );
@@ -991,7 +997,7 @@ class AlertsScreen extends StatelessWidget {
     ),
   ];
 
-  const AlertsScreen({super.key});
+   AlertsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -1324,7 +1330,7 @@ class EmergencyContactsScreen extends StatelessWidget {
     ContactItem(name: 'Trustee', phone: '2233445566'),
   ];
 
-  const EmergencyContactsScreen({super.key});
+   EmergencyContactsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -1348,12 +1354,12 @@ class EmergencyContactsScreen extends StatelessWidget {
                     _makePhoneCall('tel:${contact.phone}');
                   },
                 ),
-                IconButton(
-                  icon: const Icon(Icons.location_on),
-                  onPressed: () {
-                    _shareLocation(contact.phone);
-                  },
-                ),
+                // IconButton(
+                //   icon: const Icon(Icons.location_on),
+                //   onPressed: () {
+                //     _shareLocation(contact.phone);
+                //   },
+                // ),
               ],
             ),
           );
