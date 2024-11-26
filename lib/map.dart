@@ -4,6 +4,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class MapPage extends StatefulWidget {
+  const MapPage({super.key});
+
   @override
   _MapPageState createState() => _MapPageState();
 }
@@ -110,7 +112,7 @@ class _MapPageState extends State<MapPage> {
 
   void _addHighCrimeAreaMarkers() {
     final List<LatLng> highCrimeAreas = [
-      LatLng(45.525563, -122.677433), // Example coordinates, add more as needed
+      const LatLng(45.525563, -122.677433), // Example coordinates, add more as needed
     ];
 
     for (LatLng area in highCrimeAreas) {

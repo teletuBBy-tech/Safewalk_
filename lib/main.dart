@@ -16,6 +16,8 @@ void main() {
 }
 
 class SafeWalkApp extends StatelessWidget {
+  const SafeWalkApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -31,16 +33,18 @@ class SafeWalkApp extends StatelessWidget {
 }
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF2C6C2),
+      backgroundColor: const Color(0xFFF2C6C2),
       body: SafeArea(
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
+              const Text(
                 'SAFE WALK',
                 style: TextStyle(
                   fontSize: 36,
@@ -48,8 +52,8 @@ class HomeScreen extends StatelessWidget {
                   color: Colors.black,
                 ),
               ),
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 'Empower. Protect. Connect.',
                 style: TextStyle(
                   fontSize: 16,
@@ -57,7 +61,7 @@ class HomeScreen extends StatelessWidget {
                   fontWeight: FontWeight.normal,
                 ),
               ),
-              SizedBox(height: 50),
+              const SizedBox(height: 50),
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -65,12 +69,12 @@ class HomeScreen extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => LoginScreen()),
                   );
                 },
-                child: Text('Get Started'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.pink, // Background color
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                  textStyle: TextStyle(fontSize: 18),
+                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                  textStyle: const TextStyle(fontSize: 18),
                 ),
+                child: Text('Get Started'),
               ),
             ],
           ),
@@ -82,6 +86,8 @@ class HomeScreen extends StatelessWidget {
 
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -95,38 +101,38 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login'),
+        title: const Text('Login'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextField(
               controller: _usernameController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Username',
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextField(
               controller: _emailController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Email',
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextField(
               controller: _passwordController,
               obscureText: true,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Password',
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 // Save user details
@@ -143,12 +149,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 );
               },
-              child: Text('Login'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.pink,
-                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                textStyle: TextStyle(fontSize: 18),
+                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                textStyle: const TextStyle(fontSize: 18),
               ),
+              child: Text('Login'),
             ),
           ],
         ),
@@ -162,7 +168,7 @@ class MainScreen extends StatelessWidget {
   final String username;
   final String email;
 
-  MainScreen({required this.username, required this.email});
+  const MainScreen({super.key, required this.username, required this.email});
   void _triggerSosPanic() {
     _playAlarmSound();
     _sendSosAlerts();
@@ -185,7 +191,7 @@ class MainScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.person),
+          icon: const Icon(Icons.person),
           onPressed: () {
             Navigator.push(
               context,
@@ -200,7 +206,7 @@ class MainScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.location_on),
+            icon: const Icon(Icons.location_on),
             onPressed: () {
               Navigator.push(
                 context,
@@ -220,7 +226,7 @@ class MainScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 IconButton(
-                  icon: Icon(Icons.phone),
+                  icon: const Icon(Icons.phone),
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -230,9 +236,9 @@ class MainScreen extends StatelessWidget {
                   iconSize: 40,
                   color: Colors.pink,
                 ),
-                Text('Helpline',
+                const Text('Helpline',
                     style: TextStyle(fontSize: 14, color: Colors.black)),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
@@ -240,7 +246,7 @@ class MainScreen extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => BlogScreen()),
                     );
                   },
-                  child: TabItem(
+                  child: const TabItem(
                     icon: Icons.article,
                     label: 'Blogs',
                   ),
@@ -252,7 +258,7 @@ class MainScreen extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => AlertsScreen()),
                     );
                   },
-                  child: TabItem(
+                  child: const TabItem(
                     icon: Icons.notifications,
                     label: 'Alerts',
                   ),
@@ -264,7 +270,7 @@ class MainScreen extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => MedicalCareScreen()),
                     );
                   },
-                  child: TabItem(
+                  child: const TabItem(
                     icon: Icons.medical_services,
                     label: 'Medical Care',
                   ),
@@ -289,12 +295,12 @@ class MainScreen extends StatelessWidget {
                           color: Colors.grey.withOpacity(0.5),
                           spreadRadius: 5,
                           blurRadius: 7,
-                          offset: Offset(0, 3),
+                          offset: const Offset(0, 3),
                         ),
                       ],
                     ),
-                    padding: EdgeInsets.all(20),
-                    child: Column(
+                    padding: const EdgeInsets.all(20),
+                    child: const Column(
                       children: [
                         DefaultTabController(
                           length: 1,
@@ -327,21 +333,21 @@ class MainScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   // SOS Panic Button
                        ElevatedButton.icon(
                     onPressed: _triggerSosPanic,
-                    icon: Icon(Icons.warning),
-                    label: Text('SOS Panic'),
+                    icon: const Icon(Icons.warning),
+                    label: const Text('SOS Panic'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red,
                       padding:
-                          EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-                      textStyle: TextStyle(fontSize: 20),
+                          const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                      textStyle: const TextStyle(fontSize: 20),
                     ),
                   ),
 
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -349,7 +355,7 @@ class MainScreen extends StatelessWidget {
                       Column(
                         children: [
                         IconButton(
-  icon: Icon(Icons.contact_phone),
+  icon: const Icon(Icons.contact_phone),
   iconSize: 50,
   color: Colors.pink,
   onPressed: () {
@@ -360,8 +366,8 @@ class MainScreen extends StatelessWidget {
     );
   },
 ),
-                          SizedBox(height: 5),
-                          Text(
+                          const SizedBox(height: 5),
+                          const Text(
                             'Emergency Contacts',
                             style: TextStyle(
                               fontSize: 14,
@@ -371,12 +377,12 @@ class MainScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(width: 50),
+                      const SizedBox(width: 50),
                       // Fake Call Icon
                       Column(
                         children: [
                           IconButton(
-                            icon: Icon(Icons.call),
+                            icon: const Icon(Icons.call),
                             iconSize: 50,
                             color: Colors.pink,
                             onPressed: () {
@@ -390,8 +396,8 @@ class MainScreen extends StatelessWidget {
                               // Trigger fake call
                             },
                           ),
-                          SizedBox(height: 5),
-                          Text(
+                          const SizedBox(height: 5),
+                          const Text(
                             'Fake Call',
                             style: TextStyle(
                               fontSize: 14,
@@ -416,6 +422,8 @@ class MainScreen extends StatelessWidget {
 // =============adding chat bot=================================
 
 class MedicalCareScreen extends StatelessWidget {
+  const MedicalCareScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final List<MedicalCareItem> items = [
@@ -467,11 +475,11 @@ class MedicalCareScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Medical Care'),
+        title: const Text('Medical Care'),
       ),
       body: GridView.count(
         crossAxisCount: 2,
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         children: items.map((item) {
           return Card(
             child: InkWell(
@@ -480,21 +488,21 @@ class MedicalCareScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(item.icon, size: 40, color: Colors.pink),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
                     item.title,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                     ),
                   ),
-                  SizedBox(height: 5),
+                  const SizedBox(height: 5),
                   Text(
                     item.description,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 12,
                       color: Colors.black,
                     ),
@@ -525,11 +533,13 @@ class MedicalCareItem {
 
 // Placeholder for the ChatScreen widget
 class ChatScreen extends StatelessWidget {
+  const ChatScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Chat with Rosa')),
-      body: Center(child: Text('This is the chat screen.')),
+      appBar: AppBar(title: const Text('Chat with Rosa')),
+      body: const Center(child: Text('This is the chat screen.')),
     );
   }
 }
@@ -645,7 +655,7 @@ class TabItem extends StatelessWidget {
   final IconData icon;
   final String label;
 
-  const TabItem({required this.icon, required this.label});
+  const TabItem({super.key, required this.icon, required this.label});
 
   @override
   Widget build(BuildContext context) {
@@ -654,8 +664,8 @@ class TabItem extends StatelessWidget {
       child: Column(
         children: [
           Icon(icon, size: 40, color: Colors.pink),
-          SizedBox(height: 5),
-          Text(label, style: TextStyle(fontSize: 14, color: Colors.black)),
+          const SizedBox(height: 5),
+          Text(label, style: const TextStyle(fontSize: 14, color: Colors.black)),
         ],
       ),
     );
@@ -665,55 +675,57 @@ class TabItem extends StatelessWidget {
 
 
 class HelplineScreen extends StatelessWidget {
+  const HelplineScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Helpline Numbers'),
+        title: const Text('Helpline Numbers'),
       ),
       body: ListView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         children: [
           ListTile(
-            leading: Icon(Icons.phone),
-            title: Text('National Helpline for Women'),
-            subtitle: Text('1091'),
+            leading: const Icon(Icons.phone),
+            title: const Text('National Helpline for Women'),
+            subtitle: const Text('1091'),
             onTap: () {
               _makePhoneCall('tel:1091');
             },
           ),
-          Divider(),
+          const Divider(),
           ListTile(
-            leading: Icon(Icons.phone),
-            title: Text('Women Helpline Domestic Abuse'),
-            subtitle: Text('181'),
+            leading: const Icon(Icons.phone),
+            title: const Text('Women Helpline Domestic Abuse'),
+            subtitle: const Text('181'),
             onTap: () {
               _makePhoneCall('tel:181');
             },
           ),
-          Divider(),
+          const Divider(),
           ListTile(
-            leading: Icon(Icons.phone),
-            title: Text('Childline India Foundation'),
-            subtitle: Text('1098'),
+            leading: const Icon(Icons.phone),
+            title: const Text('Childline India Foundation'),
+            subtitle: const Text('1098'),
             onTap: () {
               _makePhoneCall('tel:1098');
             },
           ),
-          Divider(),
+          const Divider(),
           ListTile(
-            leading: Icon(Icons.location_on),
-            title: Text('Nearby Police Stations'),
-            subtitle: Text('Find the closest police stations.'),
+            leading: const Icon(Icons.location_on),
+            title: const Text('Nearby Police Stations'),
+            subtitle: const Text('Find the closest police stations.'),
             onTap: () {
               
             },
           ),
-          Divider(),
+          const Divider(),
           ListTile(
-            leading: Icon(Icons.local_hospital),
-            title: Text('Nearby Hospitals'),
-            subtitle: Text('Find the closest hospitals.'),
+            leading: const Icon(Icons.local_hospital),
+            title: const Text('Nearby Hospitals'),
+            subtitle: const Text('Find the closest hospitals.'),
             onTap: () {
               
             },
@@ -735,14 +747,16 @@ class HelplineScreen extends StatelessWidget {
 
 
 class BlogScreen extends StatelessWidget {
+  const BlogScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 4,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Blogs & Tutorials'),
-          bottom: TabBar(
+          title: const Text('Blogs & Tutorials'),
+          bottom: const TabBar(
             tabs: [
               Tab(text: 'Self-Defense Techniques'),
               Tab(text: 'Scenario-Based Training'),
@@ -771,7 +785,7 @@ class TutorialCard extends StatelessWidget {
   final String description;
   final String videoUrl;
 
-  const TutorialCard({
+  const TutorialCard({super.key, 
     required this.title,
     required this.description,
     required this.videoUrl,
@@ -788,7 +802,7 @@ class TutorialCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 8.0),
+      margin: const EdgeInsets.symmetric(vertical: 8.0),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -796,21 +810,21 @@ class TutorialCard extends StatelessWidget {
           children: [
             Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             Text(
               description,
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             ElevatedButton.icon(
               onPressed: _launchUrl,  // Launches the video URL
-              icon: Icon(Icons.play_arrow),
-              label: Text('Watch Tutorial'),
+              icon: const Icon(Icons.play_arrow),
+              label: const Text('Watch Tutorial'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.pink,
               ),
@@ -822,11 +836,13 @@ class TutorialCard extends StatelessWidget {
   }
 }
 class SelfDefenseTab extends StatelessWidget {
+  const SelfDefenseTab({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: EdgeInsets.all(16.0),
-      children: [
+      padding: const EdgeInsets.all(16.0),
+      children: const [
         TutorialCard(
           title: 'Basic Self-Defense Techniques',
           description: 'Learn the basics of self-defense to protect yourself in various situations.',
@@ -846,11 +862,13 @@ class SelfDefenseTab extends StatelessWidget {
 
 
 class ScenarioTrainingTab extends StatelessWidget {
+  const ScenarioTrainingTab({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: EdgeInsets.all(16.0),
-      children: [
+      padding: const EdgeInsets.all(16.0),
+      children: const [
         TutorialCard(
           title: 'Nighttime Safety',
           description: 'Learn how to stay safe during nighttime activities.',
@@ -877,11 +895,13 @@ class ScenarioTrainingTab extends StatelessWidget {
 }
 
 class VirtualInstructorTab extends StatelessWidget {
+  const VirtualInstructorTab({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: EdgeInsets.all(16.0),
-      children: [
+      padding: const EdgeInsets.all(16.0),
+      children: const [
         TutorialCard(
           title: 'AI-Powered Self-Defense Practice',
           description: 'Use our virtual instructor to practice self-defense techniques at home.',
@@ -898,11 +918,13 @@ class VirtualInstructorTab extends StatelessWidget {
 }
 
 class FitnessConditioningTab extends StatelessWidget {
+  const FitnessConditioningTab({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: EdgeInsets.all(16.0),
-      children: [
+      padding: const EdgeInsets.all(16.0),
+      children: const [
         TutorialCard(
           title: 'Strength Training Basics',
           description: 'Build strength with these essential exercises.',
@@ -969,15 +991,17 @@ class AlertsScreen extends StatelessWidget {
     ),
   ];
 
+  const AlertsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Alerts'),
+        title: const Text('Alerts'),
       ),
       body: GridView.count(
         crossAxisCount: 2,
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         children: alerts.map((alert) {
           return Card(
             child: InkWell(
@@ -986,21 +1010,21 @@ class AlertsScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(alert.icon, size: 40, color: Colors.pink),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
                     alert.title,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                     ),
                   ),
-                  SizedBox(height: 5),
+                  const SizedBox(height: 5),
                   Text(
                     alert.description,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 12,
                       color: Colors.black,
                     ),
@@ -1032,31 +1056,31 @@ class ProfileScreen extends StatelessWidget {
   final String username;
   final String email;
 
-  ProfileScreen({required this.username, required this.email});
+  const ProfileScreen({super.key, required this.username, required this.email});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
+        title: const Text('Profile'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Username: $username', style: TextStyle(fontSize: 20)),
-            SizedBox(height: 10),
-            Text('Email: $email', style: TextStyle(fontSize: 20)),
-            SizedBox(height: 30),
-            Divider(),
+            Text('Username: $username', style: const TextStyle(fontSize: 20)),
+            const SizedBox(height: 10),
+            Text('Email: $email', style: const TextStyle(fontSize: 20)),
+            const SizedBox(height: 30),
+            const Divider(),
             ListTile(
-              title: Text('Settings'),
+              title: const Text('Settings'),
               onTap: () { 
               },
             ),
             ListTile(
-              title: Text('About'),
+              title: const Text('About'),
               onTap: () {
                 
               },
@@ -1069,6 +1093,8 @@ class ProfileScreen extends StatelessWidget {
 }
 // fake_call_screen.dart
 class FakeCallScreen extends StatefulWidget {
+  const FakeCallScreen({super.key});
+
   @override
   _FakeCallScreenState createState() => _FakeCallScreenState();
 }
@@ -1105,7 +1131,7 @@ class _FakeCallScreenState extends State<FakeCallScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CircleAvatar(
+            const CircleAvatar(
               radius: 60,
               backgroundColor: Colors.pink,
               child: Icon(
@@ -1114,8 +1140,8 @@ class _FakeCallScreenState extends State<FakeCallScreen> {
                 color: Colors.white,
               ),
             ),
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               'Incoming Call',
               style: TextStyle(
                 color: Colors.white,
@@ -1123,29 +1149,29 @@ class _FakeCallScreenState extends State<FakeCallScreen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 10),
-            Text(
+            const SizedBox(height: 10),
+            const Text(
               'Emergency',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 18,
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 IconButton(
-                  icon: Icon(Icons.call_end),
+                  icon: const Icon(Icons.call_end),
                   color: Colors.red,
                   iconSize: 50,
                   onPressed: () {
                     Navigator.pop(context); // End call
                   },
                 ),
-                SizedBox(width: 50),
+                const SizedBox(width: 50),
                 IconButton(
-                  icon: Icon(Icons.call),
+                  icon: const Icon(Icons.call),
                   color: Colors.green,
                   iconSize: 50,
                   onPressed: () {
@@ -1167,6 +1193,8 @@ class _FakeCallScreenState extends State<FakeCallScreen> {
   }
 }
 class ActiveCallScreen extends StatefulWidget {
+  const ActiveCallScreen({super.key});
+
   @override
   _ActiveCallScreenState createState() => _ActiveCallScreenState();
 }
@@ -1190,7 +1218,7 @@ class _ActiveCallScreenState extends State<ActiveCallScreen> {
   }
 
   void _startTimer() {
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         _secondsElapsed++;
       });
@@ -1211,7 +1239,7 @@ class _ActiveCallScreenState extends State<ActiveCallScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CircleAvatar(
+            const CircleAvatar(
               radius: 60,
               backgroundColor: Colors.pink,
               child: Icon(
@@ -1220,8 +1248,8 @@ class _ActiveCallScreenState extends State<ActiveCallScreen> {
                 color: Colors.white,
               ),
             ),
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               'Maa',
               style: TextStyle(
                 color: Colors.white,
@@ -1229,24 +1257,24 @@ class _ActiveCallScreenState extends State<ActiveCallScreen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 10),
-            Text(
+            const SizedBox(height: 10),
+            const Text(
               'Calling...',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 18,
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Text(
               _formatDuration(_secondsElapsed),
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -1260,16 +1288,16 @@ class _ActiveCallScreenState extends State<ActiveCallScreen> {
                     });
                   },
                 ),
-                SizedBox(width: 50),
+                const SizedBox(width: 50),
                 IconButton(
-                  icon: Icon(Icons.call_end),
+                  icon: const Icon(Icons.call_end),
                   color: Colors.red,
                   iconSize: 50,
                   onPressed: () {
                     Navigator.pop(context); // End call
                   },
                 ),
-                SizedBox(width: 50),
+                const SizedBox(width: 50),
                 IconButton(
                   icon: Icon(_isSpeakerOn ? Icons.volume_up : Icons.volume_off),
                   color: Colors.white,
@@ -1296,11 +1324,13 @@ class EmergencyContactsScreen extends StatelessWidget {
     ContactItem(name: 'Trustee', phone: '2233445566'),
   ];
 
+  const EmergencyContactsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Emergency Contacts'),
+        title: const Text('Emergency Contacts'),
       ),
       body: ListView.builder(
         itemCount: contacts.length,
@@ -1313,13 +1343,13 @@ class EmergencyContactsScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 IconButton(
-                  icon: Icon(Icons.call),
+                  icon: const Icon(Icons.call),
                   onPressed: () {
                     _makePhoneCall('tel:${contact.phone}');
                   },
                 ),
                 IconButton(
-                  icon: Icon(Icons.location_on),
+                  icon: const Icon(Icons.location_on),
                   onPressed: () {
                     _shareLocation(contact.phone);
                   },
