@@ -1,4 +1,7 @@
 import 'dart:async';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import 'data.dart';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
@@ -431,21 +434,24 @@ class MedicalCareScreen extends StatelessWidget {
         title: 'Chat with Rosa',
         description: 'Get assistance for common medical emergencies.',
         icon: Icons.chat,
-         onTap: () async {
-        const url = 'https://bot.dialogflow.com/0c6f1dba-16cd-439d-befe-e5de7576f27c'; // Replace with your video link
-        if (await canLaunch(url)) {
-          await launch(url);
-        } else {
-          throw 'Could not launch $url';
-        }
-      },
+        onTap: () async {
+          const url = 'https://bot.dialogflow.com/0c6f1dba-16cd-439d-befe-e5de7576f27c';
+          if (await canLaunchUrl(Uri.parse(url))) {
+            await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+          } else {
+            throw 'Could not launch $url';
+          }
+        },
       ),
       MedicalCareItem(
         title: 'Nearby Hospitals',
         description: 'Find the closest hospitals based on your location.',
         icon: Icons.local_hospital,
         onTap: () {
-          // Handle Nearby Hospitals navigation
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => NearbyHospitalsScreen()),
+          );
         },
       ),
       MedicalCareItem(
@@ -453,39 +459,34 @@ class MedicalCareScreen extends StatelessWidget {
         description: 'Quickly call an ambulance in case of an emergency.',
         icon: Icons.call,
         onTap: () {
-          // Handle Call Ambulance functionality
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => CallAmbulanceScreen()),
+          );
         },
       ),
-       MedicalCareItem(
-      title: 'First Aid Tutorials',
-      description: 'Learn CPR, wound care, and other essential first aid skills.',
-      icon: Icons.play_circle_filled,
-      onTap: () async {
-        const url = 'https://youtu.be/ea1RJUOiNfQ?si=zzy0FeWuGtbb7o1u'; // Replace with your video link
-        if (await canLaunch(url)) {
-          await launch(url);
-        } else {
-          throw 'Could not launch $url';
-        }
-      },
-    ),
       MedicalCareItem(
-        title: 'Mental Health Support',
-        description: 'Access mental health resources and helpline.',
-        icon: Icons.support,
-        onTap: () {
-          // Handle Mental Health Support functionality
+        title: 'First Aid Tutorials',
+        description: 'Learn CPR, wound care, and other essential first aid skills.',
+        icon: Icons.play_circle_filled,
+        onTap: () async {
+          const url = 'https://youtu.be/ea1RJUOiNfQ?si=zzy0FeWuGtbb7o1u';
+          if (await canLaunchUrl(Uri.parse(url))) {
+            await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+          } else {
+            throw 'Could not launch $url';
+          }
         },
       ),
     ];
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Medical Care'),
+        title: Text('Medical Care'),
       ),
       body: GridView.count(
         crossAxisCount: 2,
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.0),
         children: items.map((item) {
           return Card(
             child: InkWell(
@@ -494,21 +495,21 @@ class MedicalCareScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(item.icon, size: 40, color: Colors.pink),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10),
                   Text(
                     item.title,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                     ),
                   ),
-                  const SizedBox(height: 5),
+                  SizedBox(height: 5),
                   Text(
                     item.description,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 12,
                       color: Colors.black,
                     ),
@@ -537,6 +538,127 @@ class MedicalCareItem {
   });
 }
 
+class NearbyHospitalsScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Nearby Hospitals'),
+      ),
+      body: GoogleMap(
+        initialCameraPosition: CameraPosition(
+          target: LatLng(28.6139, 77.2090), // Replace with user's location
+          zoom: 12.0,
+        ),
+        markers: {
+          Marker(
+            markerId: MarkerId('aiims'),
+            position: LatLng(28.5672, 77.2100),
+            infoWindow: InfoWindow(title: 'AIIMS'),
+          ),
+          Marker(
+            markerId: MarkerId('max_hospital'),
+            position: LatLng(28.6391, 77.0895),
+            infoWindow: InfoWindow(title: 'Max Hospital'),
+          ),
+          Marker(
+            markerId: MarkerId('fortis'),
+            position: LatLng(28.5246, 77.1853),
+            infoWindow: InfoWindow(title: 'Fortis Hospital'),
+          ),
+        },
+      ),
+    );
+  }
+}
+
+
+class CallAmbulanceScreen extends StatelessWidget {
+  // Function to initiate a phone call
+  void _makePhoneCall(String phoneNumber) async {
+    final Uri callUri = Uri(scheme: 'tel', path: phoneNumber);
+    if (await canLaunchUrl(callUri)) {
+      await launchUrl(callUri);
+    } else {
+      // Handle the case when the phone app cannot be opened
+      print('Could not launch $callUri');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Emergency Call'),
+        automaticallyImplyLeading: false, // Remove back button
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Title and instructions
+            Text(
+              'Select the type of emergency to call:',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 24),
+            
+            // Call 108 button
+            ElevatedButton.icon(
+              onPressed: () {
+                _makePhoneCall('108'); // Call number 108
+              },
+              icon: Icon(Icons.local_hospital, color: Colors.white),
+              label: Text('Call 108 (General Emergency)'),
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.blue, // Button color
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                textStyle: TextStyle(fontSize: 16),
+              ),
+            ),
+            SizedBox(height: 16),
+
+            // Call 102 button
+            ElevatedButton.icon(
+              onPressed: () {
+                _makePhoneCall('102'); // Call number 102
+              },
+              icon: Icon(Icons.pregnant_woman, color: Colors.white),
+              label: Text('Call 102 (Maternal/Child Emergency)'),
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.purple, // Button color
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                textStyle: TextStyle(fontSize: 16),
+              ),
+            ),
+            SizedBox(height: 40),
+
+            // End Call button
+            ElevatedButton.icon(
+              onPressed: () {
+                Navigator.pop(context); // Return to the previous screen
+              },
+              icon: Icon(Icons.call_end),
+              label: Text('End Call'),
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.red, // Red color for the end call button
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                textStyle: TextStyle(fontSize: 16),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
 // Placeholder for the ChatScreen widget
 class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key});
@@ -552,109 +674,6 @@ class ChatScreen extends StatelessWidget {
 
 
 
-// class MedicalCareScreen extends StatelessWidget {
-//   final List<MedicalCareItem> items = [
-//     MedicalCareItem(
-//       title: 'Chat with Rosa',
-//       description: 'Get assistance for common medical emergencies.',
-//       icon: Icons.chat,
-//       onTap: () {
-        
-//       },
-//     ),
-//     MedicalCareItem(
-//       title: 'Nearby Hospitals',
-//       description: 'Find the closest hospitals based on your location.',
-//       icon: Icons.local_hospital,
-//       onTap: () {
-        
-//       },
-//     ),
-//     MedicalCareItem(
-//       title: 'Call Ambulance',
-//       description: 'Quickly call an ambulance in case of an emergency.',
-//       icon: Icons.call,
-//       onTap: () {
-//         // Call ambulance
-//       },
-//     ),
-//     MedicalCareItem(
-//       title: 'First Aid Tutorials',
-//       description: 'Learn CPR, wound care, and other essential first aid skills.',
-//       icon: Icons.play_circle_filled,
-//       onTap: () {
-//         // Navigate to first aid video tutorials
-//       },
-//     ),
-//     MedicalCareItem(
-//       title: 'Mental Health Support',
-//       description: 'Access mental health resources and helpline.',
-//       icon: Icons.support,
-//       onTap: () {
-//         // Show mental health support options
-//       },
-//     ),
-//   ];
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Medical Care'),
-//       ),
-//       body: GridView.count(
-//         crossAxisCount: 2,
-//         padding: EdgeInsets.all(16.0),
-//         children: items.map((item) {
-//           return Card(
-//             child: InkWell(
-//               onTap: item.onTap,
-//               child: Column(
-//                 mainAxisAlignment: MainAxisAlignment.center,
-//                 children: [
-//                   Icon(item.icon, size: 40, color: Colors.pink),
-//                   SizedBox(height: 10),
-//                   Text(
-//                     item.title,
-//                     textAlign: TextAlign.center,
-//                     style: TextStyle(
-//                       fontSize: 16,
-//                       fontWeight: FontWeight.bold,
-//                       color: Colors.black,
-//                     ),
-//                   ),
-//                   SizedBox(height: 5),
-//                   Text(
-//                     item.description,
-//                     textAlign: TextAlign.center,
-//                     style: TextStyle(
-//                       fontSize: 12,
-//                       color: Colors.black,
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           );
-//         }).toList(),
-//       ),
-//     );
-//   }
-// }
-
-// class MedicalCareItem {
-//   final String title;
-//   final String description;
-//   final IconData icon;
-//   final VoidCallback onTap;
-
-//   MedicalCareItem({
-//     required this.title,
-//     required this.description,
-//     required this.icon,
-//     required this.onTap,
-//   });
-// }
 
 
 class TabItem extends StatelessWidget {
@@ -719,21 +738,52 @@ class HelplineScreen extends StatelessWidget {
             },
           ),
           const Divider(),
-          ListTile(
-            leading: const Icon(Icons.location_on),
-            title: const Text('Nearby Police Stations'),
-            subtitle: const Text('Find the closest police stations.'),
+           ListTile(
+            leading: Icon(Icons.location_on),
+            title: Text('Nearby Police Stations'),
+            subtitle: Text('Find the closest police stations.'),
             onTap: () {
-              
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LocationListScreen(
+                    locationType: 'Police Stations',
+                    locations: [
+                      Location(name: 'Laxmi Nagar', imageUrl: 'assets/police1.png'),
+                      Location(name: 'Daryaganj(Old Delhi)', imageUrl: 'assets/police2daryaganj.png'),
+                      Location(name: 'Uttam Nagar(West Delhi)', imageUrl: 'assets/p3.png'),
+                      Location(name: 'Defence Colony(South west Delhi)', imageUrl: 'assets/police4south.png'),
+                      Location(name: 'Karol Bagh(Central Dist.)', imageUrl: 'assets/karolbagh.png'),
+                      Location(name: 'Seemapuri(Shahdara Dist.)', imageUrl: 'assets/seemapuri.png'),
+                    ],
+                  ),
+                ),
+              );
             },
           ),
           const Divider(),
           ListTile(
-            leading: const Icon(Icons.local_hospital),
-            title: const Text('Nearby Hospitals'),
-            subtitle: const Text('Find the closest hospitals.'),
+            leading: Icon(Icons.local_hospital),
+            title: Text('Nearby Hospitals'),
+            subtitle: Text('Find the closest hospitals.'),
             onTap: () {
-              
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LocationListScreen(
+                    locationType: 'Hospitals',
+                    locations: [
+                      Location(name: 'MAX', imageUrl: 'assets/max1.png'),
+                      Location(name: 'FORTIS', imageUrl: 'assets/fortis2.png'),
+                      Location(name: 'BALAJI ACTION MEDICAL INSTITUTE', imageUrl: 'assets/balaji3.png'),
+                      Location(name: 'SRI GANGA RAM', imageUrl: 'assets/ganga4.png'),
+                      Location(name: 'INDRAPRASTHA APOLLO', imageUrl: 'assets/indraprashtha_apollo.png'),
+                      Location(name: 'JEEVAN', imageUrl: 'assets/jeevan.png'),
+                      
+                    ],
+                  ),
+                ),
+              );
             },
           ),
         ],
@@ -750,6 +800,74 @@ class HelplineScreen extends StatelessWidget {
     }
   }
 }
+class LocationListScreen extends StatelessWidget {
+  final String locationType;
+  final List<Location> locations;
+
+  LocationListScreen({required this.locationType, required this.locations});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Nearby $locationType'),
+      ),
+      body: GridView.builder(
+        padding: EdgeInsets.all(10),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2, // Display two items per row
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+          childAspectRatio: 0.75, // Adjust for image size
+        ),
+        itemCount: locations.length,
+        itemBuilder: (context, index) {
+          final location = locations[index];
+          return Card(
+            elevation: 5,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+                    child: Image.asset(
+                      location.imageUrl,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    location.name,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class Location {
+  final String name;
+  final String imageUrl;
+
+  Location({required this.name, required this.imageUrl});
+}
+
+
 
 
 class BlogScreen extends StatelessWidget {
@@ -959,32 +1077,14 @@ class AlertsScreen extends StatelessWidget {
       title: 'Unsafe Zone Alert',
       description: 'Be cautious! You are near a reported unsafe zone.',
       icon: Icons.warning_amber_rounded,
-      onTap: () {
-        // Action 
-      },
-    ),
-    AlertItem(
-      title: 'Event Alert: Protest',
-      description: 'Avoid the area near Central Square due to a protest.',
-      icon: Icons.event_available,
-      onTap: () {
-        // Action 
-      },
-    ),
-    AlertItem(
-      title: 'Local News Alert',
-      description: 'A curfew has been imposed in the city from 10 PM.',
-      icon: Icons.newspaper,
-      onTap: () {
-        // Action
-      },
+      onTap: null, // We'll set the onTap logic inside the build method
     ),
     AlertItem(
       title: 'Legal Update',
       description: 'New laws on women\'s safety have been passed.',
       icon: Icons.gavel,
       onTap: () {
-        // Action 
+        // Navigate to Legal Updates Screen
       },
     ),
     AlertItem(
@@ -992,22 +1092,57 @@ class AlertsScreen extends StatelessWidget {
       description: 'Participate in the new safety awareness campaign.',
       icon: Icons.campaign,
       onTap: () {
-        // Action 
+        // Navigate to Government Campaign Screen
       },
     ),
   ];
 
-   AlertsScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
+    // Set the onTap logic here to have access to context
+    for (var alert in alerts) {
+      if (alert.title == 'Unsafe Zone Alert') {
+        alert.onTap = () {
+          // Navigate to the Unsafe Zone Details screen for Chandni Chowk
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => UnsafeZoneDetailsScreen(location: 'Chandni Chowk'),
+            ),
+          );
+        };
+      }
+      if (alert.title == 'Legal Update') {
+        alert.onTap = () {
+          // Navigate to Legal Updates screen
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => LegalUpdateScreen(),
+            ),
+          );
+        };
+      }
+      if (alert.title == 'Government Campaign') {
+        alert.onTap = () {
+          // Navigate to the Government Campaign Screen
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => GovernmentCampaignScreen(),
+            ),
+          );
+        };
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Alerts'),
+        title: Text('Alerts'),
       ),
       body: GridView.count(
         crossAxisCount: 2,
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.0),
         children: alerts.map((alert) {
           return Card(
             child: InkWell(
@@ -1016,21 +1151,21 @@ class AlertsScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(alert.icon, size: 40, color: Colors.pink),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10),
                   Text(
                     alert.title,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                     ),
                   ),
-                  const SizedBox(height: 5),
+                  SizedBox(height: 5),
                   Text(
                     alert.description,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 12,
                       color: Colors.black,
                     ),
@@ -1049,15 +1184,264 @@ class AlertItem {
   final String title;
   final String description;
   final IconData icon;
-  final VoidCallback onTap;
+  VoidCallback? onTap;
 
   AlertItem({
     required this.title,
     required this.description,
     required this.icon,
-    required this.onTap,
+    this.onTap,
   });
 }
+
+class GovernmentCampaignScreen extends StatelessWidget {
+  final List<Map<String, String>> governmentCampaigns = [
+    {
+      'title': 'Beti Bachao Beti Padhao',
+      'description': '''This campaign focuses on saving and educating the girl child. It encourages the protection of girls and empowers them through education.
+      **Key Features**:
+      - Awareness on gender equality.
+      - Focus on education for girls.
+      - Financial aid for underprivileged girls.
+      - Participation options: Donate, volunteer, or spread the word.''',
+      'link': 'https://www.bbbp.gov.in/',
+    },
+    {
+      'title': 'Nirbhaya Fund',
+      'description': '''This fund aims to improve women's safety in public spaces and tackle issues like harassment and sexual violence.
+      **Key Features**:
+      - Establishment of emergency response systems (112 helpline).
+      - Setting up surveillance cameras and improving street lighting.
+      - Women safety apps and tools.
+      - Participation options: Support initiatives, donate, and volunteer.''',
+      'link': 'https://wcd.nic.in/nirbhaya-fund',
+    },
+    {
+      'title': 'Swachh Bharat Abhiyan',
+      'description': '''While focusing on cleanliness, this campaign also emphasizes creating safe public spaces for women by making public toilets more accessible and safer.
+      **Key Features**:
+      - Public toilets designed with safety features for women.
+      - Awareness campaigns to create a cleaner and safer environment.
+      - Participation options: Cleanliness drives, awareness programs, and support campaigns.''',
+      'link': 'https://swachhbharatmission.gov.in/',
+    },
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Government Campaigns for Women\'s Safety'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ListView(
+          children: governmentCampaigns.map((campaign) {
+            return Card(
+              margin: EdgeInsets.symmetric(vertical: 10),
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      campaign['title']!,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blueAccent,
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      campaign['description']!,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black87,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    ElevatedButton(
+                      onPressed: () {
+                        // Open the link to the campaign for more details
+                        _openCampaignLink(campaign['link']!);
+                      },
+                      child: Text('Learn More and Participate'),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }).toList(),
+        ),
+      ),
+    );
+  }
+
+  void _openCampaignLink(String url) {
+    // Add logic to open the campaign link in a browser or within the app
+    print("Opening link: $url");
+  }
+}
+
+
+class LegalUpdateScreen extends StatelessWidget {
+  final List<Map<String, String>> legalUpdates = [
+    {
+      'year': '2020',
+      'law': 'The Sexual Harassment of Women at Workplace (Prevention, Prohibition and Redressal) Act',
+      'details': 'This law mandates strict penalties for workplace harassment, providing a clear framework for dealing with complaints.',
+    },
+    {
+      'year': '2021',
+      'law': 'The Prohibition of Child Marriage (Amendment) Act',
+      'details': 'This amendment increases the legal marriage age for women from 18 to 21 years to ensure better protection and opportunities.',
+    },
+    {
+      'year': '2023',
+      'law': 'The Women Safety (Public Spaces) Act',
+      'details': 'A law that strengthens the protection of women in public spaces by enhancing penalties for offenders and increasing surveillance.',
+    },
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Legal Updates on Women\'s Safety'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ListView(
+          children: legalUpdates.map((update) {
+            return Card(
+              margin: EdgeInsets.symmetric(vertical: 10),
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Year: ${update['year']}',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blueAccent,
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      '${update['law']}',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      '${update['details']}',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black87,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }).toList(),
+        ),
+      ),
+    );
+  }
+}
+
+class UnsafeZoneDetailsScreen extends StatefulWidget {
+  final String location;
+
+  UnsafeZoneDetailsScreen({required this.location});
+
+  @override
+  _UnsafeZoneDetailsScreenState createState() => _UnsafeZoneDetailsScreenState();
+}
+
+class _UnsafeZoneDetailsScreenState extends State<UnsafeZoneDetailsScreen> {
+  late Future<Map<String, dynamic>> _unsafeZoneData;
+
+  @override
+  void initState() {
+    super.initState();
+    _unsafeZoneData = ApiService().fetchUnsafeZoneData(widget.location);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('${widget.location} Unsafe Zone Alerts'),
+      ),
+      body: FutureBuilder<Map<String, dynamic>>(
+        future: _unsafeZoneData,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (snapshot.hasData) {
+            var data = snapshot.data!;
+            List protests = data['protests'] ?? [];
+            List unsafeZones = data['unsafe_zones'] ?? [];
+            List events = data['events'] ?? [];
+
+            return ListView(
+              children: [
+                _buildSectionTitle('Protests'),
+                _buildList(protests),
+                _buildSectionTitle('Unsafe Zones'),
+                _buildList(unsafeZones),
+                _buildSectionTitle('Events'),
+                _buildList(events),
+              ],
+            );
+          } else {
+            return Center(child: Text('No data available'));
+          }
+        },
+      ),
+    );
+  }
+
+  Widget _buildSectionTitle(String title) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Text(
+        title,
+        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      ),
+    );
+  }
+
+  Widget _buildList(List items) {
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemCount: items.length,
+      itemBuilder: (context, index) {
+        var item = items[index];
+        return Card(
+          margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+          child: ListTile(
+            title: Text(item['name']),
+            subtitle: Text('${item['description']}\nTime: ${item['time']}'),
+          ),
+        );
+      },
+    );
+  }
+}
+
+
 class ProfileScreen extends StatelessWidget {
   final String username;
   final String email;
@@ -1322,15 +1706,17 @@ class _ActiveCallScreenState extends State<ActiveCallScreen> {
     );
   }
 }
+
+
 class EmergencyContactsScreen extends StatelessWidget {
+  EmergencyContactsScreen({super.key});
+
   final List<ContactItem> contacts = [
     ContactItem(name: 'Mother', phone: '1234567890'),
     ContactItem(name: 'Father', phone: '0987654321'),
     ContactItem(name: 'Brother', phone: '1122334455'),
     ContactItem(name: 'Trustee', phone: '2233445566'),
   ];
-
-   EmergencyContactsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -1354,12 +1740,12 @@ class EmergencyContactsScreen extends StatelessWidget {
                     _makePhoneCall('tel:${contact.phone}');
                   },
                 ),
-                // IconButton(
-                //   icon: const Icon(Icons.location_on),
-                //   onPressed: () {
-                //     _shareLocation(contact.phone);
-                //   },
-                // ),
+                IconButton(
+                  icon: const Icon(Icons.location_on),
+                  onPressed: () {
+                    _shareLocation(contact.phone);
+                  },
+                ),
               ],
             ),
           );
@@ -1368,18 +1754,18 @@ class EmergencyContactsScreen extends StatelessWidget {
     );
   }
 
-  void _makePhoneCall(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
+  Future<void> _makePhoneCall(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
     } else {
       throw 'Could not launch $url';
     }
   }
 
   void _shareLocation(String phone) {
-   
-    print('Sharing location to: $phone');
-    
+    // Simulate location sharing logic
+    print('Sharing location with: $phone');
   }
 }
 
@@ -1389,6 +1775,5 @@ class ContactItem {
 
   ContactItem({required this.name, required this.phone});
 }
-
 
 
