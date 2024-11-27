@@ -74,6 +74,19 @@ flutter:
   assets:
     - assets/bg.jpg
     - assets/Ishq - From _Lost;Found_.mp3
+    - assets/police4south.png
+    - assets/police2daryaganj.png
+    - assets/seemapuri.png
+    - assets/karolbagh.png
+    
+    - assets/police1.png
+    - assets/p3.png
+    - assets/max1.png
+    - assets/fortis2.png
+    - assets/balaji3.png
+    - assets/ganga4.png
+    - assets/indraprashtha_apollo.png
+    - assets/jeevan.png
 
 
 
