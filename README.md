@@ -1,16 +1,16 @@
-# SafeWalk
+# SafeWalk 🚶‍♀️
 
-A new Flutter project.
+**SafeWalk** is a safety-focused mobile application built with Flutter, designed to enhance women's security through real-time alerts, trusted navigation, and emergency resources.
 
-## Getting Started
+## 🔒 Key Features
+- Real-time safety alerts and notifications
+- Trusted navigation with route validation
+- Emergency contact access and panic button
+- User-friendly UI with secure Firebase integration
 
-This project is a starting point for a Flutter application.
+## 🛠 Tech Stack
+- **Flutter** – Frontend UI framework
+- **Firebase** – Backend, auth, and data management
+- **Diagnostic Flow** – Logical navigation flows for incident reporting
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- CO-DEVELOPED IN A TEAM
